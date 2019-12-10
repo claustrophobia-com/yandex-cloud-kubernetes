@@ -3,3 +3,5 @@
 terraform.d/
 *.tfstate*
 *.tfvars
+output/
+secrets/

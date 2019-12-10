@@ -13,3 +13,5 @@ variable "cluster_service_account_id" {
 variable "node_service_account_id" {
   type = string
 }
+variable "cluster_node_groups" {}
+variable "ssh_keys" {}

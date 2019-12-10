@@ -1,27 +1,30 @@
-locals {
-  node_types_name = keys(var.cluster_node_types)
-  node_types_config = values(var.cluster_node_types)
-}
-
-resource "yandex_kubernetes_node_group" "cluster_node_group" {
-  count = length(var.cluster_node_types)
-  name = local.node_types_name[count.index]
+resource "yandex_kubernetes_node_group" "cluster_node_groups" {
+  for_each = var.cluster_node_groups
+  name = each.key
   version = var.kube_version
 
   cluster_id = var.cluster_id
+
+  labels = {
+    "group_name" = each.key
+  }
 
   instance_template {
     platform_id = "standard-v2"
     nat = true
 
+    metadata = {
+      ssh-keys = var.ssh_keys
+    }
+
     resources {
-      cores = local.node_types_config[count.index].cpu
-      memory = local.node_types_config[count.index].memory
+      cores = each.value["cpu"]
+      memory = each.value["memory"]
     }
 
     boot_disk {
-      type = "network-hdd"
-      size = local.node_types_config[count.index].disk_size
+      type = each.value["disk"]["type"]
+      size = each.value["disk"]["size"]
     }
 
     scheduling_policy {
@@ -31,7 +34,7 @@ resource "yandex_kubernetes_node_group" "cluster_node_group" {
 
   scale_policy {
     fixed_scale {
-      size = local.node_types_config[count.index].scale
+      size = each.value["scale"]
     }
   }
 
@@ -47,12 +50,7 @@ resource "yandex_kubernetes_node_group" "cluster_node_group" {
   }
 }
 
-data "yandex_kubernetes_node_group" "cluster_node_group" {
-  count = length(var.cluster_node_types)
-  node_group_id = yandex_kubernetes_node_group.cluster_node_group[count.index].id
-}
-
-data "yandex_compute_instance_group" "cluster_instance_group" {
-  count = length(var.cluster_node_types)
-  instance_group_id = element(data.yandex_kubernetes_node_group.cluster_node_group.*.instance_group_id, count.index)
+data "yandex_compute_instance_group" "cluster_instance_groups" {
+  for_each = yandex_kubernetes_node_group.cluster_node_groups
+  instance_group_id = each.value.instance_group_id
 }

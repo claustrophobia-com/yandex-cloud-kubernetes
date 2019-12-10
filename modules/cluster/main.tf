@@ -33,4 +33,6 @@ module "node_groups" {
   cluster_id = yandex_kubernetes_cluster.cluster.id
   kube_version = var.kube_version
   location_subnets = var.location_subnets
+  cluster_node_groups = var.cluster_node_groups
+  ssh_keys = var.ssh_keys
 }

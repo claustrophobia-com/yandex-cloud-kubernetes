@@ -1,0 +1,1 @@
+variable "registry_name" {}
