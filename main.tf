@@ -47,7 +47,10 @@ locals {
   }
   cluster_node_groups = {
     for key, config in local.cluster_node_group_configs:
-      key => merge(config, { scale = var.node_groups_scale[key] })
+      key => merge(config, {
+        fixed_scale = lookup(var.node_groups_scale[key], "fixed_scale", false) != false ? [var.node_groups_scale[key].fixed_scale] : []
+        auto_scale = lookup(var.node_groups_scale[key], "auto_scale", false) != false ? [var.node_groups_scale[key].auto_scale] : []
+      })
   }
   node_selectors = {
     for key, id in module.cluster.node_group_ids:
@@ -180,7 +183,7 @@ module "elasticsearch" {
 
   cluster_name = var.cluster_name
   node_selector = local.node_selectors["service"]
-  scale = var.node_groups_scale["service"]
+  scale = lookup(var.node_groups_scale["service"], "fixed_scale", 3)
   storage_class = "yc-network-ssd"
   storage_size = "50Gi"
   kibana_ingress = local.ingress["kibana"]
