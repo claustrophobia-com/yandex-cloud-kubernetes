@@ -1,12 +1,15 @@
 resource "yandex_kubernetes_node_group" "cluster_node_groups" {
   for_each = var.cluster_node_groups
-  name = each.key
+
+  name = each.value["name"]
+  description = each.value["name"]
+
   version = var.kube_version
 
   cluster_id = var.cluster_id
 
   labels = {
-    "group_name" = each.key
+    "group_name" = each.value["name"]
   }
 
   instance_template {
