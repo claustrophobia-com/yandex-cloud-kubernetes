@@ -9,25 +9,17 @@ locals {
   cluster_node_service_account_name = "${var.cluster_name}-node"
 
   cluster_node_group_configs = {
-    ingress = {
-      cpu = 2
-      memory = 2
-      disk = {
-        size = 64
-        type = "network-ssd"
-      }
-    }
     service = {
       name = "service"
-      cpu = 4
-      memory = 16
+      cpu = 6
+      memory = 18
       disk = {
         size = 64
         type = "network-ssd"
       }
     }
     nfs = {
-      name = "service"
+      name = "nfs"
       cpu = 2
       memory = 2
       disk = {
@@ -37,8 +29,8 @@ locals {
     }
     web = {
       name = "web"
-      cpu = 4
-      memory = 8
+      cpu = 6
+      memory = 12
       disk = {
         size = 64
         type = "network-ssd"
@@ -128,7 +120,7 @@ provider "kubernetes" {}
 module "nginx-ingress" {
   source = "./modules/nginx-ingress"
 
-  node_selector = local.node_selectors["ingress"]
+  node_selector = local.node_selectors["web"]
 }
 
 provider "kubectl" {}
