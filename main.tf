@@ -118,15 +118,9 @@ module "cluster" {
   ]
 }
 
-provider "helm" {
-  version = "3.0"
+provider "helm" {}
 
-  debug = true
-}
-
-provider "kubernetes" {
-
-}
+provider "kubernetes" {}
 
 module "nginx-ingress" {
   source = "./modules/nginx-ingress"
@@ -135,6 +129,7 @@ module "nginx-ingress" {
 }
 
 provider "kubectl" {}
+
 provider "http" {}
 
 module "cert-manager" {
@@ -161,7 +156,9 @@ module "admins" {
   cluster_name = var.cluster_name
   cluster_endpoint = module.cluster.external_v4_endpoint
 }
+
 provider "local" {}
+
 provider "random" {}
 
 module "nfs-server-provisioner" {
