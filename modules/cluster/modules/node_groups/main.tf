@@ -36,8 +36,19 @@ resource "yandex_kubernetes_node_group" "cluster_node_groups" {
   }
 
   scale_policy {
-    fixed_scale {
-      size = each.value["scale"]
+    dynamic "auto_scale" {
+      for_each = each.value["auto_scale"]
+      content {
+        min = auto_scale.value["min"]
+        max = auto_scale.value["max"]
+        initial = auto_scale.value["initial"]
+      }
+    }
+    dynamic "fixed_scale" {
+      for_each = each.value["fixed_scale"]
+      content {
+        size = fixed_scale.value
+      }
     }
   }
 
