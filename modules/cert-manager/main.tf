@@ -32,6 +32,8 @@ resource "helm_release" "cert-manager" {
   namespace = kubernetes_namespace.cert-manager.metadata[0].name
 
   values = [yamlencode(local.values)]
+
+  depends_on = [module.crds.req, module.issuers.req]
 }
 
 module "issuers" {
@@ -39,4 +41,6 @@ module "issuers" {
 
   production_email = var.issuers_email
   staging_email = var.issuers_email
+
+  dep = [module.crds.req]
 }
