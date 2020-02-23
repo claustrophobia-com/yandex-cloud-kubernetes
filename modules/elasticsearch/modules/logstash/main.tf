@@ -46,6 +46,7 @@ locals {
   }
   values = {
     nodeSelector = var.node_selector
+    replicaCount = var.scale
     elasticsearch = {
       host = var.elasticsearch_host
     }

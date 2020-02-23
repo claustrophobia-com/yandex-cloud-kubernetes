@@ -36,6 +36,7 @@ module "logstash" {
   elasticsearch_username = local.elasticsearch_username
   elasticsearch_password = local.elasticsearch_password
   node_selector = var.node_selector
+  scale = var.scale
 }
 module "filebeat" {
   source = "./modules/filebeat"
