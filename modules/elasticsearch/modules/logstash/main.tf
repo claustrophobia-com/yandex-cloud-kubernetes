@@ -14,7 +14,7 @@ locals {
       name => {
         port = port
         protocol = contains(["beats", "tcp"], name) ? "TCP" : "UDP"
-        codec = contains(["tcp", "udp"], name) ? "json" : false
+        codec = contains(["tcp", "udp"], name) ? "json_lines" : false
       }
   }
   ports = [
