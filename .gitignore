@@ -5,3 +5,4 @@ terraform.d/
 *.tfvars
 output/
 secrets/
+yc-cli/

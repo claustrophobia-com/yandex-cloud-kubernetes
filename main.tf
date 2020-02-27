@@ -113,9 +113,43 @@ module "cluster" {
   ]
 }
 
-provider "helm" {}
+provider "helm" {
+  kubernetes {
+    load_config_file = false
 
-provider "kubernetes" {}
+    host = module.cluster.external_v4_endpoint
+    cluster_ca_certificate = module.cluster.ca_certificate
+    exec {
+      api_version = "client.authentication.k8s.io/v1beta1"
+      command = "${path.root}/yc-cli/bin/yc"
+      args = [
+        "managed-kubernetes",
+        "create-token",
+        "--cloud-id", var.yandex_cloud_id,
+        "--folder-id", var.yandex_folder_id,
+        "--token", var.yandex_token,
+      ]
+    }
+  }
+}
+
+provider "kubernetes" {
+  load_config_file = false
+
+  host = module.cluster.external_v4_endpoint
+  cluster_ca_certificate = module.cluster.ca_certificate
+  exec {
+    api_version = "client.authentication.k8s.io/v1beta1"
+    command = "${path.root}/yc-cli/bin/yc"
+    args = [
+      "managed-kubernetes",
+      "create-token",
+      "--cloud-id", var.yandex_cloud_id,
+      "--folder-id", var.yandex_folder_id,
+      "--token", var.yandex_token,
+    ]
+  }
+}
 
 module "nginx-ingress" {
   source = "./modules/nginx-ingress"
@@ -123,7 +157,23 @@ module "nginx-ingress" {
   node_selector = local.node_selectors["web"]
 }
 
-provider "kubectl" {}
+provider "kubectl" {
+  load_config_file = false
+
+  host = module.cluster.external_v4_endpoint
+  cluster_ca_certificate = module.cluster.ca_certificate
+  exec {
+    api_version = "client.authentication.k8s.io/v1beta1"
+    command = "${path.root}/yc-cli/bin/yc"
+    args = [
+      "managed-kubernetes",
+      "create-token",
+      "--cloud-id", var.yandex_cloud_id,
+      "--folder-id", var.yandex_folder_id,
+      "--token", var.yandex_token,
+    ]
+  }
+}
 
 provider "http" {}
 
