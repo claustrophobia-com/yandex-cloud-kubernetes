@@ -1,2 +1,10 @@
-variable "node_selector" {}
-variable "ingress" {}
+variable "node_selector" {
+  type = map(string)
+}
+variable "ingress" {
+  type = object({
+    name = string
+    issuer = string
+    domain = string
+  })
+}
