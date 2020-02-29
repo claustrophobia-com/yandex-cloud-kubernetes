@@ -1,2 +1,4 @@
 variable "opaque_secrets" {}
-variable "namespace" {}
+variable "namespace" {
+  type = string
+}
