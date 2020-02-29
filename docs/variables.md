@@ -26,11 +26,10 @@
 
 | Name | Description |
 |------|-------------|
-| cluster\_instances | n/a |
-| container\_registry\_id | n/a |
-| elasticsearch\_host | n/a |
-| elasticsearch\_user | n/a |
-| grafana\_admin\_password | n/a |
-| load\_balancer\_ip | n/a |
-| prometheus\_admin\_password | n/a |
+| container\_registry\_id | Created container registry ID |
+| elasticsearch\_host | Elasticsearch cluster ingress host |
+| elasticsearch\_user | Elasticsearch cluster user |
+| grafana\_admin\_password | Grafana admin user password |
+| load\_balancer\_ip | Nginx ingress load balancer ip |
+| prometheus\_admin\_password | Prometheus basic-auth user password (username - prometheus) |
 
