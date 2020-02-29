@@ -1,1 +1,3 @@
-variable "node_selector" {}
+variable "node_selector" {
+  type = map(string)
+}
