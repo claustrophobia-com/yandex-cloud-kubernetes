@@ -1,2 +1,6 @@
-variable "username" {}
-variable "password" {}
+variable "username" {
+  type = string
+}
+variable "password" {
+  type = string
+}
