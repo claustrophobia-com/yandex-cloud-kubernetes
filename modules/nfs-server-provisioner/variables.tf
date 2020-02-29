@@ -1,3 +1,9 @@
-variable "node_selector" {}
-variable "storage_class" {}
-variable "storage_size" {}
+variable "node_selector" {
+  type = map(string)
+}
+variable "storage_class" {
+  type = string
+}
+variable "storage_size" {
+  type = string
+}
