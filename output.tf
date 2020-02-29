@@ -1,6 +1,3 @@
-output "cluster_instances" {
-  value = module.cluster.instances
-}
 output "load_balancer_ip" {
   value = module.nginx-ingress.load_balancer_ip
 }

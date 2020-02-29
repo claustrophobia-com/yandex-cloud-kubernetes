@@ -63,8 +63,3 @@ resource "yandex_kubernetes_node_group" "cluster_node_groups" {
     }
   }
 }
-
-data "yandex_compute_instance_group" "cluster_instance_groups" {
-  for_each = yandex_kubernetes_node_group.cluster_node_groups
-  instance_group_id = each.value.instance_group_id
-}

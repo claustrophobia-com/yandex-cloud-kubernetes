@@ -1,6 +1,3 @@
-output "instances" {
-  value = module.node_groups.instances
-}
 output "node_group_ids" {
   value = module.node_groups.node_group_ids
 }
