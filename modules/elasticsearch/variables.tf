@@ -1,6 +1,22 @@
-variable "cluster_name" {}
-variable "node_selector" {}
-variable "scale" {}
-variable "storage_class" {}
-variable "storage_size" {}
-variable "kibana_ingress" {}
+variable "cluster_name" {
+  type = string
+}
+variable "node_selector" {
+  type = map(string)
+}
+variable "scale" {
+  type = number
+}
+variable "storage_class" {
+  type = string
+}
+variable "storage_size" {
+  type = string
+}
+variable "kibana_ingress" {
+  type = object({
+    name = string
+    issuer = string
+    domain = string
+  })
+}

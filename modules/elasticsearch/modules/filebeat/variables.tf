@@ -1,3 +1,9 @@
-variable "namespace" {}
-variable "logstash_host" {}
-variable "logstash_port" {}
+variable "namespace" {
+  type = string
+}
+variable "logstash_host" {
+  type = string
+}
+variable "logstash_port" {
+  type = string
+}
