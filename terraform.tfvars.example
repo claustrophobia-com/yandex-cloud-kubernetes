@@ -1,0 +1,22 @@
+yandex_token = ""
+yandex_cloud_id = ""
+yandex_folder_id = ""
+cluster_name = "example"
+cluster_domain = "example.com"
+node_groups_scale = {
+  service = {
+    fixed_scale = 3
+  }
+  nfs = {
+    fixed_scale = 1
+  }
+  web = {
+    fixed_scale = 3
+  }
+}
+admin_email = "admin@example.com"
+admins = {
+  adminname = {
+    public_keys = ["ssh-rsa XXXXXXX"]
+  }
+}
