@@ -50,17 +50,3 @@ variable "output_dir" {
   type = string
   default = "output"
 }
-variable "secret_dir" {
-  type = string
-  default = "secrets"
-}
-variable "service_email" {
-  type = object({
-    from_address = string
-    host = string
-    port = string
-    user = string
-    password = string
-    use_tls = bool
-  })
-}
