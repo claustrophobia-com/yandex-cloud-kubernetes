@@ -33,7 +33,7 @@ resource "helm_release" "cert-manager" {
 
   values = [yamlencode(local.values)]
 
-  depends_on = [module.crds.req, module.issuers.req]
+  depends_on = [module.crds.req]
 }
 
 module "issuers" {
@@ -42,5 +42,5 @@ module "issuers" {
   production_email = var.issuers_email
   staging_email = var.issuers_email
 
-  dep = [module.crds.req]
+  dep = [module.crds.req, helm_release.cert-manager]
 }
