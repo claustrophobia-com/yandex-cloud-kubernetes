@@ -25,6 +25,10 @@ resource "yandex_kubernetes_cluster" "cluster" {
   node_service_account_id = var.node_service_account_id
 
   release_channel = var.release_channel
+
+  depends_on = [
+    var.dep
+  ]
 }
 
 module "node_groups" {
