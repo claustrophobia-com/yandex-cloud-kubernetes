@@ -38,6 +38,9 @@ data "kubernetes_secret" "admin" {
   metadata {
     name = each.value.default_secret_name
   }
+  depends_on = [
+    kubernetes_cluster_role_binding.admin
+  ]
 }
 locals {
   kubeconfigs = {
